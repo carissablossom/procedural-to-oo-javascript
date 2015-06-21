@@ -1,5 +1,6 @@
 
 $(document).ready(function() {
+
   test.hello();
   controller.initializeListeners();
   // var addDie = function(){
@@ -39,6 +40,11 @@ var controller = {
   initializeListeners: function(){
     $('#roller button.add').on('click', this.addDie);
     $('#roller button.roll').on('click', this.rollAllDie.bind(controller));
+    $('body').on('click', this.welcome);
+  },
+
+  welcome: function(){
+    console.log("Welcome");
   },
 
   addDie: function(){
