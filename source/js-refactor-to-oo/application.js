@@ -3,7 +3,6 @@
 
 // $(document).ready(function() {
 //   $('#roller button.add').on('click', function() {
-//     console.log("WAT")
 //     $('.dice').append('<div class="die">0</div>');
 //   });
 
@@ -95,6 +94,25 @@ $(document).ready(function() {
   controller.initialize(view);
 
 });
+
+// A CONSTRUCTOR
+
+// function die(k) {
+// this.k = k;
+// this.rollDie: function(k) {
+//   var value = Math.floor((Math.random()*6)+1);
+//   $(this).text(value);
+// },
+// this.rollAllDie: function(){
+//   var $allDie = this.view.getAllDie();
+//   $allDie.each(this.rollDie); // use this. not controller.rollDie
+//   // typically, (but not here) in jQuery, this becomes the context of element clicked
+//   // (typically) .each on the jQuery object 'die', this becomes the HTML element that was clicked
+// }
+// };
+// new_die = new die(k);
+// new_die.rollAllDie();
+// new_die.rollDie();
 
 var controller = {
 
