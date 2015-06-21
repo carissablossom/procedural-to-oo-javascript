@@ -1,11 +1,10 @@
 $(document).ready(function() {
 
-function addSomeDice() {
-    console.log("WAT")
+var addSomeDice = function() {
     $('.dice').append('<div class="die">0</div>');
   }
 
-function rollTheDice() {
+var rollTheDice = function() {
   $('.die').each(function(k, die) {
     var value = Math.floor((Math.random()*6)+1);
     $(die).text(value);
