@@ -1,13 +1,17 @@
 $(document).ready(function() {
-  $('#roller button.add').on('click', function() {
+
+function addSomeDice() {
     console.log("WAT")
     $('.dice').append('<div class="die">0</div>');
-  });
+  }
 
-  $('#roller button.roll').on('click', function() {
-    $('.die').each(function(k, die) {
-      var value = Math.floor((Math.random()*6)+1);
-      $(die).text(value);
-    });
+function rollTheDice() {
+  $('.die').each(function(k, die) {
+    var value = Math.floor((Math.random()*6)+1);
+    $(die).text(value);
   });
+};
+
+  $('#roller button.add').on('click', addSomeDice);
+  $('#roller button.roll').on('click', rollTheDice);
 });
