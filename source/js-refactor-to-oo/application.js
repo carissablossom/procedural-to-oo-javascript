@@ -1,13 +1,9 @@
 $(document).ready(function() {
 
   var dice = new Dice();
-  $('#roller button.add').on('click', function(){
-    dice.add();
-  });
-
-  $('#roller button.roll').on('click', function() {
-    dice.roll();
-  });
+  
+  $('#roller button.add').on('click', dice.add);
+  $('#roller button.roll').on('click', dice.roll);
 
 });
 
