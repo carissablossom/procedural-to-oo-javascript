@@ -1,14 +1,6 @@
 $(document).ready(function() {
-  dice = new Dice;
-  view = new View;
-  $('#roller button.add').on('click',function() {
-    dice.addDie();
-    view.drawNewDie(dice);
-  });
-  $('#roller button.roll').on('click',function() {
-    dice.rollAllDie();
-    view.updateDie(dice);
-  })
+  controller = new Controller;
+  controller.startListeners();
 });
 
 //Model
@@ -54,17 +46,25 @@ View.prototype.updateDie = function(dice){
 
 //Controller
 var Controller = function(){
-  this.dice = new Dice;
+  dice = new Dice;
+  view = new View;
 };
 
- // $('#roller button.add').on('click', function() {
- //    console.log("WAT")
- //    $('.dice').append('<div class="die">0</div>');
- //  });
+Controller.prototype.startListeners = function(){
+  this.addListener();
+  this.rollListener();
+};
 
- //  $('#roller button.roll').on('click', function() {
- //    $('.die').each(function(k, die) {
- //      var value = Math.floor((Math.random()*6)+1);
- //      $(die).text(value);
- //    });
- //  });
+Controller.prototype.addListener = function(){
+  $('#roller button.add').on('click',function() {
+    dice.addDie();
+    view.drawNewDie(dice);
+  });
+};
+
+Controller.prototype.rollListener = function(){
+  $('#roller button.roll').on('click',function() {
+    dice.rollAllDie();
+    view.updateDie(dice);
+  });
+};
