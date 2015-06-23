@@ -46,8 +46,8 @@ View.prototype.updateDie = function(dice){
 
 //Controller
 var Controller = function(){
-  dice = new Dice;
-  view = new View;
+  this.dice = new Dice;
+  this.view = new View;
 };
 
 Controller.prototype.startListeners = function(){
@@ -56,15 +56,17 @@ Controller.prototype.startListeners = function(){
 };
 
 Controller.prototype.addListener = function(){
+  var controller = this;
   $('#roller button.add').on('click',function() {
-    dice.addDie();
-    view.drawNewDie(dice);
+    controller.dice.addDie();
+    controller.view.drawNewDie(controller.dice);
   });
 };
 
 Controller.prototype.rollListener = function(){
+  var controller = this;
   $('#roller button.roll').on('click',function() {
-    dice.rollAllDie();
-    view.updateDie(dice);
+    controller.dice.rollAllDie();
+    controller.view.updateDie(controller.dice);
   });
 };
