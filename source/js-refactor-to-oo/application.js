@@ -29,33 +29,46 @@
 
 // OO JS STYLE
 
-  var Table = {
-    dice: []
+  PlaySurface = function() {
+    this.dice = []
   }
+
+  var table = new PlaySurface;
+  var garageFloor = new PlaySurface;
 
   Die = function(sides) {
     this.sides = sides || 6
   };
 
   Die.prototype.roll = function(){
-    return Math.floor((Math.random()*this.sides)+1);
+    console.log(randomNumber(this.sides));
   }
 
-  var rollAll = function(){
-    $.each(Table.dice, function(index, die){
-      console.log(die.roll());
+  var rollAll = function(where){
+    $.each(where.dice, function(index, die){
+      return die.roll();
     });
+  }
+
+  var randomNumber = function(number){
+    return Math.floor((Math.random()*number)+1);
   }
 
   var regDie = new Die;
   var jumboDie = new Die(20);
-  var blueDie = new Die(3);
+  var blueDie = new Die(4);
 
-  Table.dice.push(regDie);
-  Table.dice.push(jumboDie);
-  Table.dice.push(blueDie);
+  table.dice.push(regDie);
+  table.dice.push(jumboDie);
+  table.dice.push(blueDie);
 
-  rollAll();
+  garageFloor.dice.push(regDie);
+  garageFloor.dice.push(jumboDie);
+  garageFloor.dice.push(blueDie);
+
+
+  rollAll(garageFloor);
+  rollAll(table);
 
 
 })();
