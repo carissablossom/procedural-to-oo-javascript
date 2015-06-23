@@ -1,9 +1,21 @@
 var diceApp = {};
 
-diceApp.View = function(selector) {
-  this.element = selector || $('#roller');
-  this.addButton = this.element.find('button.add');
-  this.rollButton = this.element.find('button.roll');
+diceApp.View = function(options) {
+  this.element = options.element || $('#roller');
+  this.addButton = options.addButton || $('button.add');
+  this.rollButton = options.rollButton || $('button.roll');
+  this.dieContainer = options.dieContainer || $('.dice');
+  this.dieClass = options.dieClass || 'die';
+};
+
+diceApp.View.prototype.drawDice = function() {
+  this.dieContainer.append('<div class="' + this.dieClass + '">0</div>');
+};
+
+diceApp.View.prototype.renderRollResult = function(dice) {
+  this.element.find('.' + this.dieClass).each(function(k, die) {
+    $(die).text(dice.roll());
+  });
 };
 
 diceApp.Die = function(sides) {
@@ -16,15 +28,14 @@ diceApp.Die.prototype.roll = function() {
 
 diceApp.Controller = function(options) {
   this.view = options.view;
-  this.die = options.model;
+  this.dice = options.model;
 };
 
-diceApp.Controller.prototype.addDice = function(selector) {
+diceApp.Controller.prototype.addDice = function() {
   var controller = this;
-  var diceContainer = selector;
 
   controller.view.addButton.on('click', function() {
-    diceContainer.append('<div class="die">0</div>');
+    controller.view.drawDice();
   });
 };
 
@@ -32,19 +43,18 @@ diceApp.Controller.prototype.rollDice = function() {
   var controller = this;
 
   controller.view.rollButton.on('click', function() {
-    controller.view.element.find('.die').each(function(k, die) {
-      $(die).text(controller.die.roll());
-    });
+    controller.view.renderRollResult(controller.dice);
   });
 };
 
+diceApp.Controller.prototype.initEvents = function() {
+  this.addDice();
+  this.rollDice();
+};
 
 $(document).ready(function() {
   app = new diceApp.Controller({
-    view: new diceApp.View(),
+    view: new diceApp.View({}),
     model: new diceApp.Die(6)
-  });
-
-  app.addDice($('.dice'));
-  app.rollDice();
+  }).initEvents();
 });
