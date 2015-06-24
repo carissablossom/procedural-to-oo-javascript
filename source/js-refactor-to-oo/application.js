@@ -1,74 +1,73 @@
 (function(){
 
   $(document).ready(function() {
-    addDieButtonListener();
-    rollDieButtonListener();
+    // Controller
+    var table = new PlaySurface;
+    addDieButtonListener(table);
+    rollDieButtonListener(table);
+
   });
 
-  var addDieButtonListener = function(){
+// View
+  var addDieButtonListener = function(surface){
     $('#roller button.add').on('click', function() {
-      appendDie();
+      createDie(surface);
     });
   };
 
-  var rollDieButtonListener = function() {
+  var rollDieButtonListener = function(surface) {
     $('#roller button.roll').on('click', function() {
-      $('.die').each(function(k, die) {
-        $(die).text(rollDie);
+      $('.die').each(function(index, die){
+         $(die).text(surface.rollAll()[index]);
       });
     });
   };
 
-  var appendDie = function(){
+  var createDie = function(surface) {
+    surface.dice.push(new Die);
+    appendDieViewToPage();
+  }
+  var appendDieViewToPage = function(){
     return $('.dice').append('<div class="die">0</div>')
   }
 
-  var rollDie = function(){
-    return Math.floor((Math.random()*6)+1);
-  };
 
-// OO JS STYLE
-
+// Model
   PlaySurface = function() {
     this.dice = []
   }
 
-  var table = new PlaySurface;
-  var garageFloor = new PlaySurface;
+  PlaySurface.prototype.rollAll = function(){
+    var result = []
+    $.each(this.dice, function(index, die){
+      result.push(die.roll());
+    });
+    return result
+  }
 
   Die = function(sides) {
     this.sides = sides || 6
   };
 
   Die.prototype.roll = function(){
-    console.log(randomNumber(this.sides));
-  }
-
-  var rollAll = function(where){
-    $.each(where.dice, function(index, die){
-      return die.roll();
-    });
+    return randomNumber(this.sides);
   }
 
   var randomNumber = function(number){
     return Math.floor((Math.random()*number)+1);
   }
 
-  var regDie = new Die;
-  var jumboDie = new Die(20);
-  var blueDie = new Die(4);
 
-  table.dice.push(regDie);
-  table.dice.push(jumboDie);
-  table.dice.push(blueDie);
+  // Driver Code shit
+  // var regDie = new Die;
+  // var jumboDie = new Die(20);
+  // var blueDie = new Die(4);
 
-  garageFloor.dice.push(regDie);
-  garageFloor.dice.push(jumboDie);
-  garageFloor.dice.push(blueDie);
+  // var table = new PlaySurface;
 
-
-  rollAll(garageFloor);
-  rollAll(table);
-
+  // table.dice.push(regDie);
+  // table.dice.push(jumboDie);
+  // table.dice.push(blueDie);
+  // table.rollAll();
 
 })();
